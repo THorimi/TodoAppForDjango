@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="h2">ようこそ {{ user.name }}さん</div>
+    <a href="{% url 'create'  %}" class="btn btn-secondary mb-2 " tabindex="-1" role="button" aria-disabled="true">タスクを作成する</a>
+    {% for item in object_list %}
+    <div class="alert alert-{{ item.priority }}" role="alert">
+        <div class="d-flex justify-content-between">
+          <p class="h4">{{ item.title }}  </p>
+          <div class="d-flex  gap-3">
+            <p>あと{{ item.remaining_days }}日</p>
+            <a href="{% url 'complete_task' item.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">完了済みにする</a>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ item.pk }}" aria-expanded="false" aria-controls="collapseExample">詳細</button>
+          </div>
+        </div>
+        <div class="collapse" id="collapse_{{ item.pk }}">
+          <p>{{ item.memo }}</p>
+          <a href="{% url 'update' item.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">編集画面へ</a>
+          <a href="{% url 'delete' item.pk %}" class="btn btn-danger " tabindex="-1" role="button" aria-disabled="true">削除画面へ</a>
+          <p class="mt-2">期日{{ item.duedate | date:"o/n/j "}}</p>
+        </div>
+    </div> 
+    {% empty %}
+    <p>タスクはありません</p>
+    {% endfor %}
+    <div>
+      <a href="{% url 'complete' %}" class="btn btn-secondary mt-2">完了済みタスク一覧</a>
+    </div>
+</div>
+ {% endblock content %}
+

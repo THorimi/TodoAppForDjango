@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action = '' method = 'POST'>{% csrf_token %}
+{{ form.as_p }}
+<input type = 'submit' value = 'update'>
+</form>
+<div><a href="{% url 'index' %}" class="btn btn-secondary mt-2">タスク一覧に戻る</a></div>
+{% endblock content %}
